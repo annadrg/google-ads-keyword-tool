@@ -3,10 +3,12 @@
 }
 
 .main {
-  min-height: 100vh;
-  flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.navbar {
+  padding: 1.5rem 0;
 }
 
 .title {
@@ -18,23 +20,70 @@
   color: #8B8D94
 }
 
-.footer {
+.checkInputContainer {
   display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.checkInput {
+  color: #8B8D94;
+  font-size: 0.8rem;
+  display: flex;
   align-items: center;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+.checkInput:not(:last-child) {
+  margin-right: 1rem;
 }
 
-.logo {
-  height: 1em;
+.textBox {
+  font-family: inherit;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.4rem;
+}
+
+.subTitle {
+  margin: 2rem 0 0.8rem;
+}
+
+.result {
+  padding: 1rem;
+  background-color: #fafafa;
+  border-radius: 0.4rem;
+  white-space: pre-wrap;
+  margin: 0;
+  height: 30vh;
+  overflow: auto;
+}
+
+.buttonWrapper {
+  margin-top: 2em;
+  display: flex;
+  align-items: center;
+}
+
+.buttonWrapper span {
   margin-left: 0.5rem;
+  color: #bbbec7;
+  font-size: 12px;
 }
+
+.copyButton {
+  width: inherit;
+  font-family: inherit;
+  font-weight: 800;
+  border: none;
+  border-radius: 5px;
+  max-width: 200px;
+  padding: 1em 2em;
+  color: white;
+  background-color: #3772FF;
+  cursor: pointer;
+}
+
+ .copyButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+ }
