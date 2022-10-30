@@ -7,28 +7,63 @@ import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
   const [wordsA, setWordsA] = useState('');
+  const [wordsB, setWordsB] = useState('');
+  const [wordsC, setWordsC] = useState('');
+  const [wordsD, setWordsD] = useState('');
+
+  const [fieldsCount, setFieldsCount] = useState(1);
+
   const [broad, setBroad] = useState(true);
   const [exact, setExact] = useState(false);
   const [phrase, setPhrase] = useState(false);
   const [lowerCase, setLowerCase] = useState(false);
   const [stripNumbers, setStripNumbers] = useState(false);
+
   const [copied, setCopied] = useState(false);
+
+  function pushWord(word: string, array: string[]) {
+    if (!word) return;
+
+    if (lowerCase) word = word.toLowerCase();
+    if (stripNumbers) word = word.replace(/[^A-Za-z ]/g, '');
+
+    if (broad) array.push(word);
+    if (exact) array.push(`[${word}]`);
+    if (phrase) array.push(`"${word}"`);
+  }
 
   function getWords() {
     let words = wordsA.split('\n');
     const allWords: string[] = [];
 
-    if (lowerCase) words = words.map((w) => w.toLowerCase());
-    if (stripNumbers) words = words.map((w) => w.replace(/[^A-Za-z ]/g, ''));
-
     words.forEach((w) => {
-      if (!w) return;
-      if (broad) allWords.push(w);
-      if (exact) allWords.push(`[${w}]`);
-      if (phrase) allWords.push(`"${w}"`);
+      if (wordsB) {
+        const wordCombos: string[] = [];
+        wordsB.split('\n').forEach((wB) => {
+          if (wordsC) {
+            wordsC.split('\n').forEach((wC) => {
+              if (wordsD) {
+                wordsD.split('\n').forEach((wD) => {
+                  if (!(w && wB && wC && wD)) return;
+                  wordCombos.push(w + ' ' + wB + ' ' + wC + ' ' + wD);
+                });
+              } else {
+                if (!(w && wB && wC)) return;
+                wordCombos.push(w + ' ' + wB + ' ' + wC);
+              }
+            });
+          } else {
+            if (!(w && wB)) return;
+            wordCombos.push(w + ' ' + wB);
+          }
+        });
+        wordCombos.forEach((c) => pushWord(c, allWords));
+      } else {
+        pushWord(w, allWords);
+      }
     });
 
-    return allWords.join(' ');
+    return allWords.join('\n');
   }
 
   function copyToClipboard() {
@@ -115,13 +150,63 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <textarea
-          value={wordsA}
-          rows={8}
-          onChange={(e) => setWordsA(e.target.value)}
-          className={styles.textBox}
-          placeholder="Zoekwoorden"
-        />
+        <div className={styles.fieldsWrapper}>
+          <textarea
+            value={wordsA}
+            rows={8}
+            onChange={(e) => setWordsA(e.target.value)}
+            className={styles.textBox}
+            placeholder="Zoekwoorden"
+          />
+
+          {fieldsCount > 1 && (
+            <textarea
+              value={wordsB}
+              rows={8}
+              onChange={(e) => setWordsB(e.target.value)}
+              className={styles.textBox}
+              placeholder="Zoekwoorden"
+              disabled={!wordsA}
+            />
+          )}
+
+          {fieldsCount > 2 && (
+            <textarea
+              value={wordsC}
+              rows={8}
+              onChange={(e) => setWordsC(e.target.value)}
+              className={styles.textBox}
+              placeholder="Zoekwoorden"
+              disabled={!wordsB}
+            />
+          )}
+
+          {fieldsCount > 3 && (
+            <textarea
+              value={wordsD}
+              rows={8}
+              onChange={(e) => setWordsD(e.target.value)}
+              className={styles.textBox}
+              placeholder="Zoekwoorden"
+              disabled={!wordsC}
+            />
+          )}
+
+          <div>
+            <button
+              onClick={() => setFieldsCount((v) => v + 1)}
+              disabled={fieldsCount === 4}
+            >
+              +
+            </button>
+            <button
+              onClick={() => setFieldsCount((v) => v - 1)}
+              disabled={fieldsCount === 1}
+            >
+              −
+            </button>
+          </div>
+        </div>
 
         <h3 className={styles.subTitle}>Resultaat</h3>
         <p className={styles.result} id="result">
@@ -131,7 +216,7 @@ const Home: NextPage = () => {
           <button
             className={styles.copyButton}
             onClick={copyToClipboard}
-            disabled={!navigator?.clipboard || getWords() === ''}
+            disabled={!global.navigator?.clipboard || getWords() === ''}
           >
             Kopiëren
           </button>
