@@ -1,5 +1,7 @@
+
 .container {
   padding: 0 3.1rem;
+  color: #333
 }
 
 .main {
@@ -9,6 +11,28 @@
 
 .navbar {
   padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.consultancyButton {
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  max-width: 200px;
+  padding: 1em 2em;
+  /* max-height: 31px; */
+  color: white;
+  background-color: #06A77D;
+  cursor: pointer;
+}
+
+.image {
+  cursor: pointer;
+  height: 31px !important;
+  max-height: 31px !important;
 }
 
 .title {
@@ -17,7 +41,8 @@
 }
 
 .description {
-  color: #8B8D94
+  color: #8B8D94;
+  font-size: 0.9em;
 }
 
 .checkInputContainer {
@@ -99,7 +124,7 @@
 }
 
 .buttonWrapper {
-  margin-top: 2em;
+  margin: 1em 0;
   display: flex;
   align-items: center;
 }
@@ -122,7 +147,29 @@
   cursor: pointer;
 }
 
- .copyButton:disabled {
+.clearButton {
+  margin-top: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  max-width: 100px;
+  padding: 0.4em 1em;
+  color: #4d4d4d;
+  background-color: #faf8f5;
+  cursor: pointer;
+}
+
+ :is(.copyButton, .clearButton):disabled {
   opacity: 0.6;
   cursor: not-allowed;
+ }
+
+ .footer {
+  font-size: 0.8em;
+  margin: 1em 0;
+ }
+
+ .footer span {
+  text-decoration: underline;
  }

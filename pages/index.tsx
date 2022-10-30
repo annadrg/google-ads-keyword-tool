@@ -37,12 +37,12 @@ const Home: NextPage = () => {
     const allWords: string[] = [];
 
     words.forEach((w) => {
-      if (wordsB) {
+      if (wordsB && fieldsCount > 1) {
         const wordCombos: string[] = [];
         wordsB.split('\n').forEach((wB) => {
-          if (wordsC) {
+          if (wordsC && fieldsCount > 2) {
             wordsC.split('\n').forEach((wC) => {
-              if (wordsD) {
+              if (wordsD && fieldsCount > 3) {
                 wordsD.split('\n').forEach((wD) => {
                   if (!(w && wB && wC && wD)) return;
                   wordCombos.push(w + ' ' + wB + ' ' + wC + ' ' + wD);
@@ -73,29 +73,54 @@ const Home: NextPage = () => {
     setTimeout(() => setCopied(false), 2000);
   }
 
+  function clear() {
+    setWordsA('');
+    setWordsB('');
+    setWordsC('');
+    setWordsD('');
+  }
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Label Digital SEO Tool</title>
-        <meta name="description" content="Label Digital SEO Tool" />
+        <title>Google Ads Keyword Tool - Wrap and Combine Keywords</title>
+        <meta
+          name="description"
+          content="Free Google AdWords keyword wrapper to convert keywords to broad, phrase or exact match for your Google Ads search campaigns. Easily create keyword lists and combine keywords. "
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <div className={styles.navbar}>
-          <Link href="/">
+          <Link href="https://labeldigital.com/">
             <Image
+              className={styles.image}
               src="/images/labeldigital_logo_300px.jpeg"
               alt="logo"
               width="150"
               height="31"
             />
           </Link>
+          <Link href="https://labeldigital.com/schedule-call/">
+            <button className={styles.consultancyButton}>
+              Google Ads Services
+            </button>
+          </Link>
         </div>
-        <h1 className={styles.title}>SEO tool</h1>
+        <h1 className={styles.title}>Google Ads Keyword Tool</h1>
 
         <p className={styles.description}>
-          Dit is een SEO tool. Vul hier je zoekwoorden in bla bla bla bla.
+          Our Google AdWords keyword wrapper tool helps PPC marketeers to
+          convert a list of keywords to either broad match, phrase match or
+          exact match. In addition, this tool can combine different keywords to
+          create extensive keyword lists with ease. This Google Search Ads
+          keyword tool is free to use and provided by Label Digital. Feel free
+          to share.
+        </p>
+        <p className={styles.description}>
+          To start using this tool, enter one keyword per line. If you want to
+          combine more than 2 keywords, add more boxes with the + button.
         </p>
 
         <div className={styles.checkInputContainer}>
@@ -156,7 +181,7 @@ const Home: NextPage = () => {
             rows={8}
             onChange={(e) => setWordsA(e.target.value)}
             className={styles.textBox}
-            placeholder="Zoekwoorden"
+            placeholder="Enter keywords"
           />
 
           {fieldsCount > 1 && (
@@ -165,7 +190,7 @@ const Home: NextPage = () => {
               rows={8}
               onChange={(e) => setWordsB(e.target.value)}
               className={styles.textBox}
-              placeholder="Zoekwoorden"
+              placeholder="Enter keywords"
               disabled={!wordsA}
             />
           )}
@@ -176,7 +201,7 @@ const Home: NextPage = () => {
               rows={8}
               onChange={(e) => setWordsC(e.target.value)}
               className={styles.textBox}
-              placeholder="Zoekwoorden"
+              placeholder="Enter keywords"
               disabled={!wordsB}
             />
           )}
@@ -187,7 +212,7 @@ const Home: NextPage = () => {
               rows={8}
               onChange={(e) => setWordsD(e.target.value)}
               className={styles.textBox}
-              placeholder="Zoekwoorden"
+              placeholder="Enter keywords"
               disabled={!wordsC}
             />
           )}
@@ -208,7 +233,15 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        <h3 className={styles.subTitle}>Resultaat</h3>
+        <button
+          className={styles.clearButton}
+          onClick={clear}
+          disabled={getWords() === ''}
+        >
+          Clear all
+        </button>
+
+        <h3 className={styles.subTitle}>Result</h3>
         <p className={styles.result} id="result">
           {getWords()}
         </p>
@@ -218,9 +251,22 @@ const Home: NextPage = () => {
             onClick={copyToClipboard}
             disabled={!global.navigator?.clipboard || getWords() === ''}
           >
-            Kopiëren
+            Copy
           </button>
-          {copied && <span>✔ Gekopieerd</span>}
+          {copied && <span>✔ Copied</span>}
+        </div>
+        <div className={styles.footer}>
+          © Label Digital | Do you need help with Google Ads? Schedule a{' '}
+          <span>
+            <Link href="https://labeldigital.com/schedule-call/">
+              free discovery call
+            </Link>
+          </span>{' '}
+          or{' '}
+          <span>
+            <Link href="https://labeldigital.com/contact/">contact us</Link>
+          </span>
+          .
         </div>
       </main>
     </div>
